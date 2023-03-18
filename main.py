@@ -16,26 +16,50 @@ def requests_1():
     else:
         return "Операция не выполнена" 
 
-def clever():
-   s_h = {}
+def name_all(hero):
+   s_h_all = []
    with open ("DATA\data.json", "r") as f:
        data_json = json.load(f)
        for i in data_json:
-           
-           "Thanos"
-           if i["name"] == "Thanos":
-              intel = i["powerstats"]["intelligence"]
-              s_h[i["name"]] = intel
-           elif i["name"] == "Captain America":
-              intel = i["powerstats"]["intelligence"]
-              s_h[i["name"]] = intel
-           elif i["name"] == "Hulk":
-              intel = i["powerstats"]["intelligence"]
-              s_h[i["name"]] = intel
-       
+           a = i["name"]
+           s_h_all.append(a)
+       hero_len = len(hero)
+       resualt_name_all = list(set(hero) & set(s_h_all))
+       if len(resualt_name_all) == hero_len:
+          return f"Вcе супер герои есть в нашем списке"
+       else:
+          return 
+
+def clever(hero):
+   s_h = {}
+   with open ("DATA\data.json", "r") as f:
+       data_json = json.load(f)
+       data_len = len(data_json)
+       for n1 in hero:
+           count = 0
+           while data_json[count]['name'] != n1:
+               count += 1
+           else:
+              intel = data_json[count]["powerstats"]["intelligence"]
+              s_h[n1] = intel
+       #print(list(s_h))
        a = max(s_h, key = s_h.get)
-       
        return f"Самый умный супер герой: {a}"
-                      
+       
+ 
 print(requests_1())
-print(clever())
+
+def main ():
+    yes_no = "да"
+    while yes_no == "да":
+        input_hero = input('Введите Супергероев которых Вы хотите сравнить: ')
+        input_hero2 = input_hero.split(', ')
+        while name_all(input_hero2) == None:
+            input_hero = input('Введите других Супергероев: ')
+            input_hero2 = input_hero.split(', ')
+        else:    
+            print(clever(input_hero2))
+        
+        yes_no = input("Хотите продолжить сравнение?")
+ 
+print(main())   
